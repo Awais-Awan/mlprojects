@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Predict Math Score</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f5f7fa;
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 1rem 0;
+    }
+    .card {
+      max-width: 450px;
+      margin: 0 auto;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.1);
+      overflow: hidden;
+    }
+    .card-header {
+      background: #4f46e5;
+      color: white;
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .card-body {
+      padding: 0.75rem;
+    }
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+      color: #1f2937;
+    }
+    .form-control, .form-select {
+      font-size: 0.85rem;
+      padding: 0.35rem 0.5rem;
+      height: 2.2rem;
+      border-radius: 6px;
+    }
+    .mb-3 {
+      margin-bottom: 0.5rem !important;
+    }
+    .btn-primary {
+      background: #4f46e5;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .result-box {
+      margin-top: 0.75rem;
+      padding: 0.6rem;
+      background: #eef2ff;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1e40af;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">Math Score Predictor</div>
+    <div class="card-body">
+      <form action="{{ url_for('predict_datapoint') }}" method="post">
+
+        <div class="mb-3">
+          <label class="form-label">Gender</label>
+          <select class="form-select" name="gender" required>
+            <option value="" disabled selected></option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Ethnicity</label>
+          <select class="form-select" name="ethnicity" required>
+            <option value="" disabled selected></option>
+            <option value="group A">A</option>
+            <option value="group B">B</option>
+            <option value="group C">C</option>
+            <option value="group D">D</option>
+            <option value="group E">E</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Parent Education</label>
+          <select class="form-select" name="parental_level_of_education" required>
+            <option value="" disabled selected></option>
+            <option value="associate's degree">Associate</option>
+            <option value="bachelor's degree">Bachelor</option>
+            <option value="high school">High School</option>
+            <option value="master's degree">Master</option>
+            <option value="some college">Some College</option>
+            <option value="some high school">Some HS</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Lunch</label>
+          <select class="form-select" name="lunch" required>
+            <option value="" disabled selected></option>
+            <option value="standard">Standard</option>
+            <option value="free/reduced">Free</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Test Prep</label>
+          <select class="form-select" name="test_preparation_course" required>
+            <option value="" disabled selected></option>
+            <option value="none">None</option>
+            <option value="completed">Done</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Reading Score</label>
+          <input type="number" class="form-control" name="reading_score"
+                 min="0" max="100" placeholder="0-100" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Writing Score</label>
+          <input type="number" class="form-control" name="writing_score"
+                 min="0" max="100" placeholder="0-100" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Predict</button>
+      </form>
+
+      {% if results is defined %}
+      <div class="result-box">
+        Math: <strong>{{ "%.1f" % results }}</strong>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
